@@ -1,21 +1,31 @@
 import { createStore } from 'redux';
 
-const initialName = {
-  inputName: '',
-  inputPhone: '',
+const initialState = {
+  input: {
+    inputName: '',
+    inputNumber: '',
+  },
 };
 
-const reduser = (state = initialName, { type, payload }) => {
+const reduser = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'input/setName':
       return {
-        inputValue: payload,
-      };
-    case 'input/setNumber':
-      return {
-        inputValue: payload,
+        ...state,
+        input: {
+          ...state.input,
+          inputName: payload,
+        },
       };
 
+    case 'input/setNumber':
+      return {
+        ...state,
+        input: {
+          ...state.input,
+          inputNumber: payload,
+        },
+      };
     default:
       return state;
   }

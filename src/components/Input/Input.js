@@ -6,7 +6,7 @@ import * as actions from '../../redux/action';
 // import { nanoid } from 'nanoid';
 import s from './Input.module.css';
 
-function Input({ name, phone, addName, addNumber }) {
+function Input({ name, number, addName, addNumber }) {
   // const [name, setName] = useState('');
   // const [number, setNumber] = useState('');
 
@@ -52,7 +52,7 @@ function Input({ name, phone, addName, addNumber }) {
           className={s.input}
           type="tel"
           name="number"
-          value={phone}
+          value={number}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
@@ -77,12 +77,13 @@ Input.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  name: state.inputName,
-  phone: state.inputPhone,
+  name: state.input.inputName,
+  number: state.input.inputNumber,
 });
+console.log(mapStateToProps);
 const mapDispatchToProps = dispatch => ({
-  addName: () => dispatch(actions.addName()),
-  addNumber: () => dispatch(actions.addNumber()),
+  addName: v => dispatch(actions.addName(v.currentTarget.value)),
+  addNumber: v => dispatch(actions.addNumber(v.currentTarget.value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Input);
