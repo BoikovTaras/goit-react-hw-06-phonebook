@@ -1,34 +1,36 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as actions from '../../redux/action';
 
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import s from './Input.module.css';
 
-export default function Input({ contacts, addContact }) {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+function Input({ name, phone, addName, addNumber }) {
+  // const [name, setName] = useState('');
+  // const [number, setNumber] = useState('');
 
-  const addName = v => setName(v.currentTarget.value);
+  // const addName = v => setName(v.currentTarget.value);
 
-  const addNumber = v => setNumber(v.currentTarget.value);
+  // const addNumber = v => setNumber(v.currentTarget.value);
 
-  const reset = () => {
-    setName('');
-    setNumber('');
-  };
+  // const reset = () => {
+  //   setName('');
+  //   setNumber('');
+  // };
 
-  const addNewContact = event => {
-    if (contacts.find(item => item.name.toLowerCase() === name.toLowerCase())) {
-      return window.alert(`${name} is alredy in contacts`, 2500);
-    } else {
-      addContact(renderContact());
-      reset();
-    }
-  };
+  // const addNewContact = event => {
+  //   if (contacts.find(item => item.name.toLowerCase() === name.toLowerCase())) {
+  //     return window.alert(`${name} is alredy in contacts`, 2500);
+  //   } else {
+  //     addContact(renderContact());
+  //     reset();
+  //   }
+  // };
 
-  const renderContact = () => {
-    return { id: nanoid(), name, number };
-  };
+  // const renderContact = () => {
+  //   return { id: nanoid(), name, number };
+  // };
 
   return (
     <form className={s.form}>
@@ -50,7 +52,7 @@ export default function Input({ contacts, addContact }) {
           className={s.input}
           type="tel"
           name="number"
-          value={number}
+          value={phone}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
@@ -58,7 +60,11 @@ export default function Input({ contacts, addContact }) {
           placeholder="Enter phone number"
         />
       </label>
-      <button className={s.button} type="button" onClick={addNewContact}>
+      <button
+        className={s.button}
+        type="button"
+        // onClick={addNewContact}
+      >
         Add contact
       </button>
     </form>
@@ -69,3 +75,14 @@ Input.propTypes = {
   name: PropTypes.string,
   number: PropTypes.number,
 };
+
+const mapStateToProps = state => ({
+  name: state.inputName,
+  phone: state.inputPhone,
+});
+const mapDispatchToProps = dispatch => ({
+  addName: () => dispatch(actions.addName()),
+  addNumber: () => dispatch(actions.addNumber()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Input);
