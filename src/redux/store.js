@@ -1,36 +1,12 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import inputReducer from './input-reducer/input-reducer';
+console.log(inputReducer);
 
-const initialState = {
-  input: {
-    inputName: '',
-    inputNumber: '',
-  },
-};
+const rootReduser = combineReducers({
+  input: inputReducer,
+});
 
-const reduser = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case 'input/setName':
-      return {
-        ...state,
-        input: {
-          ...state.input,
-          inputName: payload,
-        },
-      };
-
-    case 'input/setNumber':
-      return {
-        ...state,
-        input: {
-          ...state.input,
-          inputNumber: payload,
-        },
-      };
-    default:
-      return state;
-  }
-};
-
-const store = createStore(reduser);
+const store = createStore(rootReduser, composeWithDevTools());
 
 export default store;

@@ -1,12 +1,3 @@
-export const addName = value => ({
-  type: 'input/setName',
-  payload: value,
-});
-export const addNumber = value => ({
-  type: 'input/setNumber',
-  payload: value,
-});
-
 //   const reset = () => {
 //     setName('');
 //     setNumber('');

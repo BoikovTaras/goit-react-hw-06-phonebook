@@ -1,7 +1,7 @@
 // import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as actions from '../../redux/action';
+import * as actions from '../../redux/input-reducer/input-actions';
 
 // import { nanoid } from 'nanoid';
 import s from './Input.module.css';
@@ -80,7 +80,6 @@ const mapStateToProps = state => ({
   name: state.input.inputName,
   number: state.input.inputNumber,
 });
-console.log(mapStateToProps);
 const mapDispatchToProps = dispatch => ({
   addName: v => dispatch(actions.addName(v.currentTarget.value)),
   addNumber: v => dispatch(actions.addNumber(v.currentTarget.value)),
