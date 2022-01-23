@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
 import s from './App.module.css';
+
 import Input from './components/Input/Input';
 import Title from './components/Title/Title';
 import Contacts from './components/Contacts/Contacts';

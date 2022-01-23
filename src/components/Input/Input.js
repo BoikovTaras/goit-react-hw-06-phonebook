@@ -1,36 +1,34 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import * as actions from '../../redux/input-reducer/input-actions';
 
-// import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 import s from './Input.module.css';
 
-function Input({ name, number, addName, addNumber }) {
-  // const [name, setName] = useState('');
-  // const [number, setNumber] = useState('');
+export default function Input({ contacts, addContact }) {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  // const addName = v => setName(v.currentTarget.value);
+  const addName = v => setName(v.currentTarget.value);
 
-  // const addNumber = v => setNumber(v.currentTarget.value);
+  const addNumber = v => setNumber(v.currentTarget.value);
 
-  // const reset = () => {
-  //   setName('');
-  //   setNumber('');
-  // };
+  const reset = () => {
+    setName('');
+    setNumber('');
+  };
 
-  // const addNewContact = event => {
-  //   if (contacts.find(item => item.name.toLowerCase() === name.toLowerCase())) {
-  //     return window.alert(`${name} is alredy in contacts`, 2500);
-  //   } else {
-  //     addContact(renderContact());
-  //     reset();
-  //   }
-  // };
+  const addNewContact = event => {
+    if (contacts.find(item => item.name.toLowerCase() === name.toLowerCase())) {
+      return window.alert(`${name} is alredy in contacts`, 2500);
+    } else {
+      addContact(renderContact());
+      reset();
+    }
+  };
 
-  // const renderContact = () => {
-  //   return { id: nanoid(), name, number };
-  // };
+  const renderContact = () => {
+    return { id: nanoid(), name, number };
+  };
 
   return (
     <form className={s.form}>
@@ -60,11 +58,7 @@ function Input({ name, number, addName, addNumber }) {
           placeholder="Enter phone number"
         />
       </label>
-      <button
-        className={s.button}
-        type="button"
-        // onClick={addNewContact}
-      >
+      <button className={s.button} type="button" onClick={addNewContact}>
         Add contact
       </button>
     </form>
@@ -75,14 +69,3 @@ Input.propTypes = {
   name: PropTypes.string,
   number: PropTypes.number,
 };
-
-const mapStateToProps = state => ({
-  name: state.input.inputName,
-  number: state.input.inputNumber,
-});
-const mapDispatchToProps = dispatch => ({
-  addName: v => dispatch(actions.addName(v.currentTarget.value)),
-  addNumber: v => dispatch(actions.addNumber(v.currentTarget.value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Input);
