@@ -1,9 +1,9 @@
 import { createStore, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import appReduser from './app/app-reduser';
+import inputReduser from './input/input-reduser';
 
 const rootReduser = combineReducers({
-  app: appReduser,
+  app: inputReduser,
 });
 
 const store = createStore(rootReduser, composeWithDevTools());

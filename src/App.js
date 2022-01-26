@@ -1,34 +1,34 @@
-import { useState } from 'react';
+// import { useState, useEffect } from 'react';
 // import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
+// import inputActions from './redux/input/input-actions';
 
 import s from './App.module.css';
-import { connect } from 'react-redux';
-import addContact from './redux/app/app-actions';
 import Input from './components/Input/Input';
 import Title from './components/Title/Title';
-// import Contacts from './components/Contacts/Contacts';
+import Contacts from './components/Contacts/Contacts';
 import Filter from './components/Filter/Filter';
 
-function App() {
-  const [filter, setFilter] = useState('');
+function App({ addContact }) {
+  // const [filter, setFilter] = useState('');
 
   // const deleteContact = id =>
   //   setContacts(contacts.filter(item => item.id !== id));
 
-  const filterContact = e => setFilter(e.currentTarget.value);
+  // const filterContact = e => setFilter(e.currentTarget.value);
 
   // const filteredContacts = () => {
-  // const normFilter = filter.toLowerCase();
-  // return contacts.filter(contact =>
-  //   contact.name.toLowerCase().includes(normFilter),
-  // );
+  //   const normFilter = filter.toLowerCase();
+  //   return contacts.filter(contact =>
+  //     contact.name.toLowerCase().includes(normFilter),
+  //   );
   // };
 
   // useEffect(() => {
   //   const getContacts = localStorage.getItem('contacts');
   //   const contactArr = JSON.parse(getContacts);
   //   if (contactArr) {
-  //     setContacts(contactArr);
+  //     addContact(contactArr);
   //   }
   // }, []);
 
@@ -38,29 +38,22 @@ function App() {
 
   return (
     <div className={s.container}>
-      app
       <Title title="Phonebook" />
       <Input />
       <Title title="Contacts" />
-      <Filter value={filter} onChange={filterContact} />
-      {/* <Contacts contacts={filteredContacts()} /> */}
+      <Filter />
+      <Contacts />
     </div>
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    contacts: state.app.contacts,
-    filter: state.app.filter,
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    addContact: () => dispatch(addContact()),
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     addContact: event => dispatch(inputActions.addContact(event)),
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
 
 // App.propTypes = {
 //   filter: PropTypes.string,

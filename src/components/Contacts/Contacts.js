@@ -1,6 +1,8 @@
 import React from 'react';
 import s from './Contacts.module.css';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import inputActions from '../../redux/input/input-actions';
 
 const Contacts = ({ contacts, deleteContact }) => {
   return (
@@ -27,4 +29,16 @@ Contacts.propTypes = {
   number: PropTypes.number,
 };
 
-export default Contacts;
+const mapStateToProps = state => {
+  return {
+    contacts: state.app.contacts,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteContact: id => dispatch(inputActions.deleteContact(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

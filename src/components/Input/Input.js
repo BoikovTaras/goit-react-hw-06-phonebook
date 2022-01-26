@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import appActions from '../../redux/app/app-actions';
+import inputActions from '../../redux/input/input-actions';
 
 import { nanoid } from 'nanoid';
 import s from './Input.module.css';
@@ -25,6 +25,7 @@ function Input({ contacts, addContact }) {
     } else {
       addContact(renderContact());
       reset();
+      localStorage.setItem('contacts', JSON.stringify(contacts));
     }
   };
 
@@ -75,7 +76,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addContact: event => dispatch(appActions.addContact(event)),
+    addContact: event => dispatch(inputActions.addContact(event)),
   };
 };
 
