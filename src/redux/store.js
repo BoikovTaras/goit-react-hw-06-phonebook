@@ -1,11 +1,11 @@
-import { createStore, combineReducers } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { configureStore } from '@reduxjs/toolkit';
 import inputReduser from './input/input-reduser';
 
-const rootReduser = combineReducers({
-  app: inputReduser,
+const store = configureStore({
+  reducer: {
+    app: inputReduser,
+  },
+  devTools: process.env.NODE_ENV === 'development',
 });
-
-const store = createStore(rootReduser, composeWithDevTools());
 
 export default store;

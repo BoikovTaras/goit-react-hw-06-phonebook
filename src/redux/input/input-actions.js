@@ -1,18 +1,7 @@
-import appTypes from './input-types';
+import { createAction } from '@reduxjs/toolkit';
 
-const addContact = event => ({
-  type: appTypes.ADD,
-  payload: event,
-});
-
-const deleteContact = contactId => ({
-  type: appTypes.DELETE,
-  payload: contactId,
-});
-
-const filterContact = text => ({
-  type: appTypes.FILTER,
-  payload: text,
-});
+const addContact = createAction('input/Add');
+const deleteContact = createAction('input/Delete');
+const filterContact = createAction('input/Filter');
 
 export default { addContact, deleteContact, filterContact };
