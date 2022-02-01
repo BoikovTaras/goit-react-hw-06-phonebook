@@ -15,7 +15,7 @@ const contacts = (state = [], { type, payload }) => {
 const filter = (state = '', { type, payload }) => {
   switch (type) {
     case inputTypes.FILTER:
-      return { ...state, payload };
+      return payload;
     default:
       return state;
   }

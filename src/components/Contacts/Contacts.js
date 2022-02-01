@@ -1,6 +1,5 @@
 import React from 'react';
 import s from './Contacts.module.css';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import inputActions from '../../redux/input/input-actions';
 
@@ -24,21 +23,19 @@ const Contacts = ({ contacts, deleteContact }) => {
   );
 };
 
-Contacts.propTypes = {
-  name: PropTypes.string,
-  number: PropTypes.number,
+const filteredContacts = (contacts, filter) => {
+  const normFilter = filter.toLowerCase();
+  return contacts.filter(contact =>
+    contact.name.toLowerCase().includes(normFilter),
+  );
 };
 
-const mapStateToProps = state => {
-  return {
-    contacts: state.app.contacts,
-  };
-};
+const mapStateToProps = ({ app: { filter, contacts } }) => ({
+  contacts: filteredContacts(contacts, filter),
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    deleteContact: id => dispatch(inputActions.deleteContact(id)),
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  deleteContact: id => dispatch(inputActions.deleteContact(id)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
