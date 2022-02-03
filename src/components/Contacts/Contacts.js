@@ -1,9 +1,22 @@
 import React from 'react';
 import s from './Contacts.module.css';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import inputActions from '../../redux/input/input-actions';
 
-const Contacts = ({ contacts, deleteContact }) => {
+export default function Contacts() {
+  const contact = useSelector(state => state.app.contacts);
+  const filter = useSelector(state => state.app.filter);
+  const dispatch = useDispatch();
+
+  function filteredContacts(contacts, filter) {
+    const normFilter = filter.toLowerCase();
+    return contacts.filter(value =>
+      value.name.toLowerCase().includes(normFilter),
+    );
+  }
+
+  const contacts = filteredContacts(contact, filter);
+
   return (
     <ul className={s.contact_list}>
       {contacts.map(contact => (
@@ -13,7 +26,7 @@ const Contacts = ({ contacts, deleteContact }) => {
             className={s.delete}
             type="button"
             id={contact.id}
-            onClick={() => deleteContact(contact.id)}
+            onClick={() => dispatch(inputActions.deleteContact(contact.id))}
           >
             Delete
           </button>
@@ -21,21 +34,4 @@ const Contacts = ({ contacts, deleteContact }) => {
       ))}
     </ul>
   );
-};
-
-const filteredContacts = (contacts, filter) => {
-  const normFilter = filter.toLowerCase();
-  return contacts.filter(contact =>
-    contact.name.toLowerCase().includes(normFilter),
-  );
-};
-
-const mapStateToProps = ({ app: { filter, contacts } }) => ({
-  contacts: filteredContacts(contacts, filter),
-});
-
-const mapDispatchToProps = dispatch => ({
-  deleteContact: id => dispatch(inputActions.deleteContact(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
+}

@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import inputActions from '../../redux/input/input-actions';
 
 import { nanoid } from 'nanoid';
 import s from './Input.module.css';
 
-function Input({ contacts, addContact }) {
+export default function Input() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(state => state.app.contacts);
   const dispatch = useDispatch();
-  const contactsArray = useSelector(state => state.app.contacts);
 
   useEffect(() => {
     const getContacts = localStorage.getItem('contacts');
@@ -24,17 +24,21 @@ function Input({ contacts, addContact }) {
         ) {
           return true;
         }
-        return dispatch(addContact(localContacts));
+        return dispatch(inputActions.addContact(localContacts));
       });
     }
   }, []);
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contactsArray]);
+  }, [contacts]);
 
   const addName = v => setName(v.currentTarget.value);
   const addNumber = v => setNumber(v.currentTarget.value);
+
+  const renderContact = () => {
+    return { id: nanoid(), name, number };
+  };
 
   const reset = () => {
     setName('');
@@ -45,13 +49,9 @@ function Input({ contacts, addContact }) {
     if (contacts.find(item => item.name.toLowerCase() === name.toLowerCase())) {
       return window.alert(`${name} is alredy in contacts`, 2500);
     } else {
-      addContact(renderContact());
+      dispatch(inputActions.addContact(renderContact()));
       reset();
     }
-  };
-
-  const renderContact = () => {
-    return { id: nanoid(), name, number };
   };
 
   return (
@@ -88,16 +88,6 @@ function Input({ contacts, addContact }) {
     </form>
   );
 }
-
-const mapStateToProps = state => ({
-  contacts: state.app.contacts,
-});
-
-const mapDispatchToProps = dispatch => ({
-  addContact: event => dispatch(inputActions.addContact(event)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Input);
 
 Input.propTypes = {
   name: PropTypes.string,
